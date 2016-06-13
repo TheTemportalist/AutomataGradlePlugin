@@ -14,7 +14,7 @@ buildscript {
 
 plugins {
 	id 'java'
-	id "temportalist.automata" version "0.0.1"
+	id "temportalist.automata" version "0.0.1b2"
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -48,11 +48,8 @@ processResources {
 
 }
 
-task sampleTask(type: temportalist.automata.SampleTask) {
-	println "task sampleTask config state"
-	doLast {
-		println "task sampleTask execution state"
-	}
+sampleExtension {
+	message = "This is a message from the build.gradle!"
 }
 
 // ~~~~~ End ~~~~~

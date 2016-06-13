@@ -7,4 +7,6 @@ package temportalist.automata;
  */
 public class SamplePluginExtension {
 
+	String message = "This is a SamplePluginExtension message";
+
 }

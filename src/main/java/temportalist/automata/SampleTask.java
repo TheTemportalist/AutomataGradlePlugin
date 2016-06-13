@@ -16,14 +16,14 @@ public class SampleTask extends DefaultTask {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@TaskAction
-	public void samplePluginTasks() throws TaskExecutionException {
+	public void run() throws TaskExecutionException {
 		try {
 			SamplePluginExtension extension = this.getProject().getExtensions().findByType(SamplePluginExtension.class);
-			this.log.info("Completed sampleTask");
+			this.log.info(extension.message);
 		}
 		catch(Exception e) {
 			throw new TaskExecutionException(this,
-					new Exception("Exception occured while processing sampleTask", e)
+					new Exception("Exception occurred while processing sampleTask", e)
 			);
 		}
 	}

@@ -13,7 +13,8 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 
-		project.getExtensions().create("samplePlugin", SamplePluginExtension.class);
+		project.getExtensions().create("sampleExtension", SamplePluginExtension.class);
+		project.getTasks().create("sampleTask", SampleTask.class);
 
 	}
 
