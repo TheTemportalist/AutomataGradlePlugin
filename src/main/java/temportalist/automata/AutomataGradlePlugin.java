@@ -30,7 +30,7 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 		sampleEXT.minecraft.setRunDir("runInThisDir");
 		sampleEXT.minecraft.setMappings("snapshot_20160518");
 
-		sampleEXT.sampleEXT = project.getTasks().findByName("sourceSets");
+		sampleEXT.sampleEXT = project.getExtensions().findByName("sourceSets");
 
 		Object processResourcesObj = project.getTasks().findByName("processResources");
 		if (processResourcesObj instanceof ProcessResources) {
