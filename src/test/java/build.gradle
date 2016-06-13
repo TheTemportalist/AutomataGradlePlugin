@@ -2,27 +2,29 @@
 plugins {
 	id 'java'
 	id "net.minecraftforge.gradle.forge" version "2.0.2"
-	id "temportalist.automata" version "0.0.1b15"
+	id "temportalist.automata" version "0.0.1b18"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
-processResources {
-
-	from(sourceSets.main.resources.srcDirs) {
-		include 'mcmod.info'
-		expand 'version': project.version, 'mcversion': project.minecraft.version
-	}
-
-	from(sourceSets.main.resources.srcDirs) {
-		exclude 'mcmod.info'
-	}
-
-}
-
-sampleExtension {
+automata {
 	message = "This is a message from the build.gradle!"
-}
 
-// ~~~~~ End ~~~~~
+	organization = "temportalist"
+	groupName = "test"
+	archiveName = "Test"
+
+	versionMajor = 0
+	versionMinor = 0
+	versionPatch = 1
+
+	version_minecraft = "1.9.4"
+	version_forge = "12.17.0.1932"
+	version_forge_b = "-1.9.4"
+	version_mcp = "snapshot_20160518"
+
+	curseID = 12345
+	curseBuildType = "release"
+
+}

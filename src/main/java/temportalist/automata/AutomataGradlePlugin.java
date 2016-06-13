@@ -3,6 +3,9 @@ package temportalist.automata;
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.language.jvm.tasks.ProcessResources;
 
 /**
@@ -17,32 +20,45 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 
 		// START: testing extensions and tasks
 
-		SamplePluginExtension sampleEXT = new SamplePluginExtension(project);
-		project.getExtensions().add("sampleExtension", sampleEXT);
-		project.getTasks().create("sampleTask", SampleTask.class);
+		ExtensionAutomata automataEXT = new ExtensionAutomata();
+		project.getExtensions().add("automata", automataEXT);
+		project.getTasks().create("displayDetails", TaskDisplayDetails.class);
 
 		// END
 
-		project.setGroup("temportalist.test");
+		project.setGroup(String.format(
+				"%1$s.%2$s", automataEXT.organization, automataEXT.groupName
+		));
 		project.setVersion("0.0.1");
 
-		sampleEXT.minecraft = project.getExtensions().findByType(ForgeExtension.class);
-		sampleEXT.minecraft.setVersion("1.9.4-12.17.0.1932-1.9.4");
-		sampleEXT.minecraft.setRunDir("runInThisDir");
-		sampleEXT.minecraft.setMappings("snapshot_20160518");
-
-		sampleEXT.sampleEXT = project.getExtensions().findByName("sourceSets");
+		automataEXT.minecraft = project.getExtensions().findByType(ForgeExtension.class);
+		automataEXT.minecraft.setVersion("1.9.4-12.17.0.1932-1.9.4");
+		automataEXT.minecraft.setRunDir("runInThisDir");
+		automataEXT.minecraft.setMappings("snapshot_20160518");
 
 		Object processResourcesObj = project.getTasks().findByName("processResources");
 		if (processResourcesObj instanceof ProcessResources) {
-			sampleEXT.processResources = (ProcessResources) processResourcesObj;
+			automataEXT.processResources = (ProcessResources) processResourcesObj;
 
-			sampleEXT.processResources.getInputs().property(
+			automataEXT.processResources.getInputs().property(
 					"version", project.getVersion()
 			);
-			sampleEXT.processResources.getInputs().property(
-					"mcversion", sampleEXT.minecraft.getVersion()
+			automataEXT.processResources.getInputs().property(
+					"mcversion", automataEXT.minecraft.getVersion()
 			);
+
+			SourceSetContainer sets = project.getConvention().getPlugin(JavaPluginConvention.class).getSourceSets();
+			SourceSet mainSet = sets.findByName("main");
+			/* TODO
+				from(sourceSets.main.resources.srcDirs) {
+					include 'mcmod.info'
+					expand 'version': project.version, 'mcversion': project.minecraft.version
+				}
+
+				from(sourceSets.main.resources.srcDirs) {
+					exclude 'mcmod.info'
+				}
+			*/
 
 		}
 

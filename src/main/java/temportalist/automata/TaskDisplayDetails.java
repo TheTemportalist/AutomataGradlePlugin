@@ -12,12 +12,12 @@ import static java.lang.System.out;
  *
  * @author TheTemportalist
  */
-public class SampleTask extends DefaultTask {
+public class TaskDisplayDetails extends DefaultTask {
 
 	@TaskAction
 	public void run() throws TaskExecutionException {
 		try {
-			SamplePluginExtension extension = this.getProject().getExtensions().findByType(SamplePluginExtension.class);
+			ExtensionAutomata extension = this.getProject().getExtensions().findByType(ExtensionAutomata.class);
 			out.println(extension.message);
 
 			out.println(extension.sampleEXT);
@@ -27,7 +27,7 @@ public class SampleTask extends DefaultTask {
 
 			out.println("----------");
 
-			Project project = extension.getProject();
+			Project project = this.getProject();
 			out.println("Group: " + project.getGroup());
 			out.println("Version: " + project.getVersion());
 
@@ -36,6 +36,7 @@ public class SampleTask extends DefaultTask {
 			if (extension.minecraft != null) {
 				out.println("Minecraft:");
 				out.println("Version: " + extension.minecraft.getVersion());
+				out.println("Forge: " + extension.minecraft.getForgeVersion());
 				out.println("Run Dir: " + extension.minecraft.getRunDir());
 				out.println("Mappings: " + extension.minecraft.getMappings());
 				out.println();

@@ -1,7 +1,6 @@
 package temportalist.automata;
 
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
-import org.gradle.api.Project;
 import org.gradle.language.jvm.tasks.ProcessResources;
 
 /**
@@ -9,21 +8,19 @@ import org.gradle.language.jvm.tasks.ProcessResources;
  *
  * @author TheTemportalist
  */
-class SamplePluginExtension {
+class ExtensionAutomata {
 
-	private final Project project;
-
-	SamplePluginExtension(Project project) {
-		this.project = project;
-	}
-
-	public Project getProject() {
-		return this.project;
-	}
-
-	String message = "This is a SamplePluginExtension message";
+	String message = "This is a ExtensionAutomata message";
 	Object sampleEXT = null;
 	ForgeExtension minecraft = null;
 	ProcessResources processResources = null;
+
+	String organization, groupName, archiveName;
+	int versionMajor, versionMinor, versionPatch;
+
+	String version_minecraft, version_forge, version_forge_b = null, version_mcp;
+
+	String curseID = null;
+	String curseBuildType = null;
 
 }
