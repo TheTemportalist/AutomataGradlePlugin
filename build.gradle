@@ -10,6 +10,15 @@ ext {
 	url = 'https://github.com/TheTemportalist/AutomataGradlePlugin'
 }
 
+if (project.hasProperty("tempGradle.publish.key")) {
+	println "Found gradle publish key"
+	project.setProperty("gradle.publish.key", tempGradle.publish.key)
+}
+if (project.hasProperty("tempGradle.publish.secret")) {
+	println "Found gradle publish secret"
+	project.setProperty("gradle.publish.secret", tempGradle.publish.secret)
+}
+
 def getVersion() {
 	def v = "0.0.1"
 	if (project.hasProperty("BUILD_NUMBER"))
