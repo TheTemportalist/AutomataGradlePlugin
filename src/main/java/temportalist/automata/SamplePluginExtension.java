@@ -1,6 +1,7 @@
 package temportalist.automata;
 
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
+import org.gradle.api.Project;
 import org.gradle.language.jvm.tasks.ProcessResources;
 
 /**
@@ -9,6 +10,16 @@ import org.gradle.language.jvm.tasks.ProcessResources;
  * @author TheTemportalist
  */
 class SamplePluginExtension {
+
+	private final Project project;
+
+	SamplePluginExtension(Project project) {
+		this.project = project;
+	}
+
+	public Project getProject() {
+		return this.project;
+	}
 
 	String message = "This is a SamplePluginExtension message";
 	Object sampleEXT = null;

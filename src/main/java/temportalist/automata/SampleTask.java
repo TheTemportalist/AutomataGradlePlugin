@@ -1,8 +1,11 @@
 package temportalist.automata;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
+
+import static java.lang.System.out;
 
 /**
  * Created by TheTemportalist on 6/12/2016.
@@ -15,26 +18,40 @@ public class SampleTask extends DefaultTask {
 	public void run() throws TaskExecutionException {
 		try {
 			SamplePluginExtension extension = this.getProject().getExtensions().findByType(SamplePluginExtension.class);
-			System.out.println(extension.message);
+			out.println(extension.message);
 
-			System.out.println(extension.sampleEXT);
+			out.println(extension.sampleEXT);
 			if (extension.sampleEXT != null) {
-				System.out.println(extension.sampleEXT.getClass().getName());
+				out.println(extension.sampleEXT.getClass().getName());
 			}
 
+			out.println("----------");
+
+			Project project = extension.getProject();
+			out.println("Group: " + project.getGroup());
+			out.println("Version: " + project.getVersion());
+
+			out.println();
+
 			if (extension.minecraft != null) {
-				System.out.println(extension.minecraft.getForgeVersion());
-				System.out.println(extension.minecraft.getRunDir());
+				out.println("Minecraft:");
+				out.println("Version: " + extension.minecraft.getVersion());
+				out.println("Run Dir: " + extension.minecraft.getRunDir());
+				out.println("Mappings: " + extension.minecraft.getMappings());
+				out.println();
 			}
 
 			if (extension.processResources != null) {
-				System.out.println(
+				out.println("Process Resources:");
+
+				out.println("Version: " +
 						extension.processResources.getInputs().getProperties().get("version")
 				);
-				System.out.println(
+				out.println("MCVersion: " +
 						extension.processResources.getInputs().getProperties().get("mcversion")
 				);
 
+				out.println();
 			}
 
 		}

@@ -12,11 +12,11 @@ ext {
 
 if (project.hasProperty("tempGradle.publish.key")) {
 	println "Found gradle publish key"
-	project.setProperty("gradle.publish.key", tempGradle.publish.key)
+	project.setProperty("gradle.publish.key", project.properties["tempGradle.publish.key"])
 }
 if (project.hasProperty("tempGradle.publish.secret")) {
 	println "Found gradle publish secret"
-	project.setProperty("gradle.publish.secret", tempGradle.publish.secret)
+	project.setProperty("gradle.publish.secret", project.properties["tempGradle.publish.secret"])
 }
 
 def getVersion() {
@@ -86,7 +86,7 @@ pluginBundle {
 			id = 'temportalist.automata'
 			description = project.description
 			displayName = 'Automata Gradle Plugin'
-			version = project.version
+			version = getVersion()
 			tags = ['minecraft', 'forgegradle']
 		}
 	}

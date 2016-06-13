@@ -17,16 +17,17 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 
 		// START: testing extensions and tasks
 
-		SamplePluginExtension sampleEXT = new SamplePluginExtension();
+		SamplePluginExtension sampleEXT = new SamplePluginExtension(project);
 		project.getExtensions().add("sampleExtension", sampleEXT);
 		project.getTasks().create("sampleTask", SampleTask.class);
 
 		// END
 
+		project.setGroup("temportalist.test");
 		project.setVersion("0.0.1");
 
 		sampleEXT.minecraft = project.getExtensions().findByType(ForgeExtension.class);
-		sampleEXT.minecraft.setForgeVersion("1.9.4-12.17.0.1932-1.9.4");
+		sampleEXT.minecraft.setVersion("1.9.4-12.17.0.1932-1.9.4");
 		sampleEXT.minecraft.setRunDir("runInThisDir");
 		sampleEXT.minecraft.setMappings("snapshot_20160518");
 
@@ -40,10 +41,8 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 					"version", project.getVersion()
 			);
 			sampleEXT.processResources.getInputs().property(
-					"mcversion", sampleEXT.minecraft.getForgeVersion()
+					"mcversion", sampleEXT.minecraft.getVersion()
 			);
-
-
 
 		}
 
