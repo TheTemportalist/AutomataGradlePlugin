@@ -3,6 +3,7 @@ package temportalist.automata;
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.language.jvm.tasks.ProcessResources;
 
 /**
  * Created by TheTemportalist on 6/12/2016.
@@ -22,14 +23,29 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 
 		// END
 
-		sampleEXT.sampleEXT = project.getExtensions().findByName("processResources");
+		project.setVersion("0.0.1");
 
-		ForgeExtension minecraft = project.getExtensions().findByType(ForgeExtension.class);
-		minecraft.setForgeVersion("1.9.4-12.17.0.1932-1.9.4");
-		minecraft.setRunDir("runInThisDir");
-		minecraft.setMappings("snapshot_20160518");
+		sampleEXT.minecraft = project.getExtensions().findByType(ForgeExtension.class);
+		sampleEXT.minecraft.setForgeVersion("1.9.4-12.17.0.1932-1.9.4");
+		sampleEXT.minecraft.setRunDir("runInThisDir");
+		sampleEXT.minecraft.setMappings("snapshot_20160518");
 
-		sampleEXT.sampleEXT = project.getTasks().findByName("processResources");
+		sampleEXT.sampleEXT = project.getTasks().findByName("sourceSets");
+
+		Object processResourcesObj = project.getTasks().findByName("processResources");
+		if (processResourcesObj instanceof ProcessResources) {
+			sampleEXT.processResources = (ProcessResources) processResourcesObj;
+
+			sampleEXT.processResources.getInputs().property(
+					"version", project.getVersion()
+			);
+			sampleEXT.processResources.getInputs().property(
+					"mcversion", sampleEXT.minecraft.getForgeVersion()
+			);
+
+
+
+		}
 
 	}
 
