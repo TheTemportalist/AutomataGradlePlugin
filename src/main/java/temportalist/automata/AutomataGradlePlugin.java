@@ -24,8 +24,9 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 
 		sampleEXT.minecraftEXT = project.getExtensions().findByName("minecraft");
 		ForgeExtension minecraft = project.getExtensions().findByType(ForgeExtension.class);
+		sampleEXT.minecraftEXT = minecraft;
 		minecraft.setForgeVersion("1.9.4-12.17.0.1932-1.9.4");
-		minecraft.setRunDir("run");
+		minecraft.setRunDir("runInThisDir");
 		minecraft.setMappings("snapshot_20160518");
 
 	}

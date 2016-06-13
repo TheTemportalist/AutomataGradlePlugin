@@ -1,5 +1,6 @@
 package temportalist.automata;
 
+import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
@@ -21,6 +22,11 @@ public class SampleTask extends DefaultTask {
 			SamplePluginExtension extension = this.getProject().getExtensions().findByType(SamplePluginExtension.class);
 			System.out.println(extension.message);
 			System.out.println(extension.minecraftEXT);
+			if (extension.minecraftEXT instanceof ForgeExtension) {
+				ForgeExtension minecraft = (ForgeExtension)extension.minecraftEXT;
+				System.out.println(minecraft.getForgeVersion());
+				System.out.println(minecraft.getRunDir());
+			}
 		}
 		catch(Exception e) {
 			throw new TaskExecutionException(this,
