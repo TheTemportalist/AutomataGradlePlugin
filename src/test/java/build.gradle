@@ -14,7 +14,7 @@ buildscript {
 
 plugins {
 	id 'java'
-	id "temportalist.automata" version "0.0.1b2"
+	id "temportalist.automata" version "0.0.1b3"
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'

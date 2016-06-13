@@ -19,7 +19,7 @@ public class SampleTask extends DefaultTask {
 	public void run() throws TaskExecutionException {
 		try {
 			SamplePluginExtension extension = this.getProject().getExtensions().findByType(SamplePluginExtension.class);
-			this.log.info(extension.message);
+			System.out.println(extension.message);
 		}
 		catch(Exception e) {
 			throw new TaskExecutionException(this,
