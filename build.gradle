@@ -1,0 +1,70 @@
+plugins {
+	id 'java'
+	id 'idea'
+	id 'maven'
+	id 'com.gradle.plugin-publish' version '0.9.4'
+}
+
+ext {
+	inceptionYear = '2016'
+	url = 'https://github.com/TheTemportalist/AutomataGradlePlugin'
+}
+
+version = '0.0.1'
+group = 'temportalist'
+description = 'Gradle plugin for Minecraft ForgeGradle to make build scripts lighter and add more configurability to mods'
+archivesBaseName = 'AutomataGradle'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+repositories {
+	jcenter()
+}
+
+dependencies {
+	compile gradleApi()
+}
+
+jar.manifest.mainAttributes([
+		'Implementation-Title'  : project.name,
+		'Implementation-Version': project.version
+])
+
+task sourcesJar(type: Jar) {
+	from sourceSets.main.allSource
+	classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+	from javadoc.destinationDir
+	classifier = 'javadoc'
+}
+
+assemble.dependsOn javadocJar, sourcesJar
+
+[compileJava].each {
+	it.options.encoding = 'UTF-8'
+	it.options.deprecation = true
+	it.options.fork = true
+}
+
+artifacts {
+	archives jar
+	archives javadocJar
+	archives sourcesJar
+}
+
+pluginBundle {
+	website = project.url
+	vcsUrl = 'git://github.com/TheTemportalist/AutomataGradlePlugin.git'
+	plugins {
+		automataGradlePlugin {
+			id = 'temportalist.automata'
+			description = project.description
+			displayName = 'Automata Gradle Plugin'
+			version = project.version
+			tags = ['minecraft', 'forgegradle']
+		}
+	}
+}
