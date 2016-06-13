@@ -4,6 +4,7 @@ plugins {
 	id 'idea'
 	id 'maven'
 	id 'com.gradle.plugin-publish' version '0.9.4'
+	id "io.spring.dependency-management" version "0.5.7.RELEASE"
 }
 
 ext {
@@ -26,17 +27,16 @@ archivesBaseName = 'AutomataGradle'
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
-repositories {
-	jcenter()
-	maven {
-		name = "forge"
-		url = "http://files.minecraftforge.net/maven"
+dependencyManagement {
+	dependencies {
+		dependency group: 'net.minecraftforge.gradle', name: 'forge', version: '2.0.2'
 	}
 }
 
 dependencies {
 	compile gradleApi()
-	compile group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '2.0.2'
+	//compile 'net.minecraftforge.gradle:ForgeGradle'
+	//compile group: 'net.minecraftforge.gradle', name: 'forge', version: '2.0.2'
 }
 
 jar.manifest.mainAttributes([

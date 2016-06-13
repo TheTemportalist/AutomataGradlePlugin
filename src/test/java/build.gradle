@@ -1,8 +1,8 @@
 
 plugins {
 	id 'java'
-	id "net.minecraftforge.gradle.forge" version "2.0.2"
-	id "temportalist.automata" version "0.0.1b4"
+	//id "net.minecraftforge.gradle.forge" version "2.0.2"
+	id "temportalist.automata" version "0.0.1b5"
 }
 
 group = "temportalist.test"
