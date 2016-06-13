@@ -10,7 +10,14 @@ ext {
 	url = 'https://github.com/TheTemportalist/AutomataGradlePlugin'
 }
 
-version = '0.0.1'
+def getVersion() {
+	def v = "0.0.1"
+	if (project.hasProperty("BUILD_NUMBER"))
+		v += "b${BUILD_NUMBER}"
+	return v
+}
+
+version = getVersion()
 group = 'temportalist'
 description = 'Gradle plugin for Minecraft ForgeGradle to make build scripts lighter and add more configurability to mods'
 archivesBaseName = 'AutomataGradle'
