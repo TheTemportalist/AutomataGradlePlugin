@@ -29,6 +29,8 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 		minecraft.setRunDir("runInThisDir");
 		minecraft.setMappings("snapshot_20160518");
 
+		sampleEXT.sampleEXT = project.getTasks().findByName("processResources");
+
 	}
 
 }
