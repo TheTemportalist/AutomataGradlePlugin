@@ -2,19 +2,13 @@
 plugins {
 	id 'java'
 	id "net.minecraftforge.gradle.forge" version "2.0.2"
-	id "temportalist.automata" version "0.0.1b7"
+	id "temportalist.automata" version "0.0.1b9"
 }
 
 group = "temportalist.test"
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
-
-minecraft {
-	version = "1.9.4-12.17.0.1932-1.9.4"
-	runDir = "run"
-	mappings = "snapshot_20160518"
-}
 
 archivesBaseName = "Test-1.9.4"
 version = "0.0.1"

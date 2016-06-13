@@ -1,5 +1,6 @@
 package temportalist.automata;
 
+import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
@@ -22,6 +23,10 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 		// END
 
 		sampleEXT.minecraftEXT = project.getExtensions().findByName("minecraft");
+		ForgeExtension minecraft = project.getExtensions().findByType(ForgeExtension.class);
+		minecraft.setForgeVersion("1.9.4-12.17.0.1932-1.9.4");
+		minecraft.setRunDir("run");
+		minecraft.setMappings("snapshot_20160518");
 
 	}
 
