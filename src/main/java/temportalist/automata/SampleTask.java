@@ -21,9 +21,9 @@ public class SampleTask extends DefaultTask {
 		try {
 			SamplePluginExtension extension = this.getProject().getExtensions().findByType(SamplePluginExtension.class);
 			System.out.println(extension.message);
-			System.out.println(extension.minecraftEXT);
-			if (extension.minecraftEXT instanceof ForgeExtension) {
-				ForgeExtension minecraft = (ForgeExtension)extension.minecraftEXT;
+			System.out.println(extension.sampleEXT);
+			if (extension.sampleEXT instanceof ForgeExtension) {
+				ForgeExtension minecraft = (ForgeExtension)extension.sampleEXT;
 				System.out.println(minecraft.getForgeVersion());
 				System.out.println(minecraft.getRunDir());
 			}
