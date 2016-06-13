@@ -15,30 +15,13 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 
 		// START: testing extensions and tasks
 
-		project.getExtensions().add("sampleExtension", new SamplePluginExtension());
+		SamplePluginExtension sampleEXT = new SamplePluginExtension();
+		project.getExtensions().add("sampleExtension", sampleEXT);
 		project.getTasks().create("sampleTask", SampleTask.class);
 
 		// END
 
-		/* Try to replace the following:
-			buildscript {
-				repositories {
-					jcenter()
-					maven {
-						name = "forge"
-						url = "http://files.minecraftforge.net/maven"
-					}
-				}
-				dependencies {
-					classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-				}
-			}
-
-			apply plugin: 'net.minecraftforge.gradle.forge'
-		 */
-		project.getBuildscript().getRepositories(); // add
-		project.getBuildscript().getDependencies().add("classpath", "net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT");
-		project.getPlugins().apply("net.minecraftforge.gradle.forge");
+		sampleEXT.minecraftEXT = project.getExtensions().findByName("minecraft");
 
 	}
 

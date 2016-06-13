@@ -8,5 +8,6 @@ package temportalist.automata;
 class SamplePluginExtension {
 
 	String message = "This is a SamplePluginExtension message";
+	Object minecraftEXT = null;
 
 }

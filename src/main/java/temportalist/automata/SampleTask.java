@@ -20,6 +20,7 @@ public class SampleTask extends DefaultTask {
 		try {
 			SamplePluginExtension extension = this.getProject().getExtensions().findByType(SamplePluginExtension.class);
 			System.out.println(extension.message);
+			System.out.println(extension.minecraftEXT);
 		}
 		catch(Exception e) {
 			throw new TaskExecutionException(this,

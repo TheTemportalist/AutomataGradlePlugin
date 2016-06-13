@@ -1,23 +1,9 @@
-// For those who want the bleeding edge
-buildscript {
-	repositories {
-		jcenter()
-		maven {
-			name = "forge"
-			url = "http://files.minecraftforge.net/maven"
-		}
-	}
-	dependencies {
-		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-	}
-}
 
 plugins {
 	id 'java'
-	id "temportalist.automata" version "0.0.1b3"
+	id "net.minecraftforge.gradle.forge" version "2.0.2"
+	id "temportalist.automata" version "0.0.1b4"
 }
-
-apply plugin: 'net.minecraftforge.gradle.forge'
 
 group = "temportalist.test"
 
