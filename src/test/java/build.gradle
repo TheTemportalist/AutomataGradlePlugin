@@ -2,11 +2,9 @@
 ///*
 buildscript {
 	repositories {
-		repositories {
-			maven {
-				name "forge"
-				url "http://files.minecraftforge.net/maven"
-			}
+		maven {
+			name "forge"
+			url "http://files.minecraftforge.net/maven"
 		}
 	}
 }
@@ -14,7 +12,7 @@ buildscript {
 
 plugins {
 	id 'java'
-	id "temportalist.automata" version "0.0.1m6"
+	id "temportalist.automata" version "0.0.1m8"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7
@@ -35,7 +33,10 @@ automata {
 	versionForge = "12.17.0.1932-1.9.4"
 	versionMappings = "snapshot_20160518"
 
-	curseID = 12345
-	curseBuildType = "release"
+	curseKey = ""
+	curseProject {
+		id = "12345"
+		releaseType = "release"
+	}
 
 }

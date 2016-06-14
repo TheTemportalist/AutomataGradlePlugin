@@ -59,10 +59,15 @@ repositories {
 
 dependencies {
 	compile gradleApi()
+
 	// Gradle Portal (def works)
 	// compile 'gradle.plugin.net.minecraftforge.gradle:ForgeGradle:2.0.2'
 	// Testing snapshot
 	compile group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '2.2-SNAPSHOT'
+
+	// CurseForge Gradle cursegradle
+	compile group: 'gradle.plugin.com.matthewprenger', name: 'CurseGradle', version: '1.0.7'
+
 }
 
 jar.manifest.mainAttributes([

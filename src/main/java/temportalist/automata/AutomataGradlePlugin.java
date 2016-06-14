@@ -16,6 +16,7 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 		this.applyForge(project);
+		this.applyCurseGradle(project);
 
 		this.applyExtensions(project);
 		this.applyTasks(project);
@@ -26,6 +27,12 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 		Map<String, String> mapPluginForge = new HashMap<>();
 		mapPluginForge.put("plugin", "net.minecraftforge.gradle.forge");
 		project.apply(mapPluginForge);
+	}
+
+	private void applyCurseGradle(final Project project) {
+		Map<String, String> mapPlugin = new HashMap<>();
+		mapPlugin.put("plugin", "com.matthewprenger.cursegradle");
+		project.apply(mapPlugin);
 	}
 
 	private void applyExtensions(final Project project) {

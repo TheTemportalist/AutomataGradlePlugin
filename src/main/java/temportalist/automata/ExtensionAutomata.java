@@ -1,5 +1,7 @@
 package temportalist.automata;
 
+import com.matthewprenger.cursegradle.CurseExtension;
+import groovy.lang.Closure;
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaPluginConvention;
@@ -16,10 +18,18 @@ public class ExtensionAutomata {
 
 	private final Project project;
 	private final ForgeExtension minecraft;
+	private final CurseExtension curseforge;
 
 	public ExtensionAutomata(final Project project) {
 		this.project = project;
 		this.minecraft = project.getExtensions().findByType(ForgeExtension.class);
+		this.curseforge = project.getExtensions().findByType(CurseExtension.class);
+		this.init();
+	}
+
+	private void init() {
+		// Makes sure CurseGradle doesn't complain if the user doesn't use curse
+		this.curseforge.setApiKey("");
 	}
 
 	String message = "This is a ExtensionAutomata message";
@@ -30,8 +40,7 @@ public class ExtensionAutomata {
 
 	String versionMinecraft, versionForge, versionMappings;
 
-	String curseID = null;
-	String curseBuildType = null;
+	String curseKey = null;
 
 	String runDir = "run";
 
@@ -111,12 +120,13 @@ public class ExtensionAutomata {
 		this.minecraft.setMappings(this.versionMappings);
 	}
 
-	public void setCurseID(String curseID) {
-		this.curseID = curseID;
+	public void setCurseKey(String curseKey) {
+		this.curseKey = curseKey;
+		this.curseforge.setApiKey(this.curseKey);
 	}
 
-	public void setCurseBuildType(String curseBuildType) {
-		this.curseBuildType = curseBuildType;
+	public void curseProject(Closure<?> projectClosure) {
+		this.curseforge.project(projectClosure);
 	}
 
 	public void loadInto(Project project) {
