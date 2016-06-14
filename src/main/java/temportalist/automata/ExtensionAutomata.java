@@ -14,18 +14,95 @@ import org.gradle.language.jvm.tasks.ProcessResources;
  */
 public class ExtensionAutomata {
 
+	private final Project project;
+	private final ForgeExtension minecraft;
+
+	public ExtensionAutomata(final Project project) {
+		this.project = project;
+		this.minecraft = project.getExtensions().findByType(ForgeExtension.class);
+	}
+
 	String message = "This is a ExtensionAutomata message";
 	Object sampleEXT = null;
 
 	String organization, groupName, archiveName;
 	int versionMajor, versionMinor, versionPatch;
 
-	String version_minecraft, version_forge, version_forge_b = null, version_mcp;
+	String versionMinecraft, versionForge, versionForgeSuffix = null, versionMappings;
 
 	String curseID = null;
 	String curseBuildType = null;
 
 	String runDir = "run";
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setOrganization(String org) {
+		this.organization = org;
+	}
+
+	public void setGroupName(String name) {
+		this.groupName = name;
+	}
+
+	public void setArchiveName(String name) {
+		this.archiveName = name;
+	}
+
+	public void setVersionMajor(int versionMajor) {
+		this.versionMajor = versionMajor;
+	}
+
+	public void setVersionMinor(int versionMinor) {
+		this.versionMinor = versionMinor;
+	}
+
+	public void setVersionPatch(int versionPatch) {
+		this.versionPatch = versionPatch;
+	}
+
+	public void setVersionMinecraft(String versionMinecraft) {
+		this.versionMinecraft = versionMinecraft;
+		this.checkForgeVersions();
+	}
+
+	public void setVersionForge(String versionForge) {
+		this.versionForge = versionForge;
+		this.checkForgeVersions();
+	}
+
+	public void setVersionForgeSuffix(String versionForgeSuffix) {
+		this.versionForgeSuffix = versionForgeSuffix;
+		this.checkForgeVersions();
+	}
+
+	private void checkForgeVersions() {
+		if (this.versionMinecraft == null || this.versionForge == null) return;
+		this.minecraft.setVersion(String.format("%1$s-%2$s",
+				this.versionMinecraft,
+				this.versionForgeSuffix == null
+						? this.versionForge
+						: this.versionForge + "-" + this.versionForgeSuffix
+		));
+	}
+
+	public void setVersionMappings(String versionMappings) {
+		this.versionMappings = versionMappings;
+	}
+
+	public void setCurseID(String curseID) {
+		this.curseID = curseID;
+	}
+
+	public void setCurseBuildType(String curseBuildType) {
+		this.curseBuildType = curseBuildType;
+	}
+
+	public void setRunDir(String runDir) {
+		this.runDir = runDir;
+	}
 
 	public void loadInto(Project project) {
 		project.setGroup(String.format(
@@ -38,13 +115,13 @@ public class ExtensionAutomata {
 
 		ForgeExtension minecraft = project.getExtensions().findByType(ForgeExtension.class);
 		minecraft.setVersion(String.format("%1$s-%2$s",
-				this.version_minecraft,
-				this.version_forge_b == null
-						? this.version_forge
-						: this.version_forge + "-" + this.version_forge_b
+				this.versionMinecraft,
+				this.versionForgeSuffix == null
+						? this.versionForge
+						: this.versionForge + "-" + this.versionForgeSuffix
 		));
 		minecraft.setRunDir(this.runDir);
-		minecraft.setMappings(this.version_mcp);
+		minecraft.setMappings(this.versionMappings);
 
 		Object processResourcesObj = project.getTasks().findByName("processResources");
 		if (processResourcesObj instanceof ProcessResources) {

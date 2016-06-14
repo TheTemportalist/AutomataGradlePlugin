@@ -1,8 +1,6 @@
 package temportalist.automata;
 
-import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgePlugin;
-import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
@@ -18,34 +16,33 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
-
-		Map<String, String> mapPluginForge = new HashMap<>();
-		mapPluginForge.put("plugin", "net.minecraftforge.gradle.forge");
-		project.apply(mapPluginForge);
+		this.applyForge(project);
 
 		// START: testing extensions and tasks
 
-		ExtensionAutomata automataEXT = new ExtensionAutomata();
+		this.applyExtensions(project);
+		this.applyTasks(project);
+
+		ForgePlugin forge = project.getPlugins().findPlugin(ForgePlugin.class);
+
+	}
+
+	private void applyForge(final Project project) {
+		Map<String, String> mapPluginForge = new HashMap<>();
+		mapPluginForge.put("plugin", "net.minecraftforge.gradle.forge");
+		project.apply(mapPluginForge);
+	}
+
+	private void applyExtensions(final Project project) {
+		ExtensionAutomata automataEXT = new ExtensionAutomata(project);
 		project.getExtensions().add("automata", automataEXT);
+	}
+
+	private void applyTasks(final Project project) {
 		TaskDetailsLoad taskLoad =
 				project.getTasks().create("loadAutomata", TaskDetailsLoad.class);
 		TaskDetailsDisplay taskDisplay =
 				project.getTasks().create("displayDetails", TaskDetailsDisplay.class);
-
-		ForgePlugin plugin = project.getPlugins().findPlugin(ForgePlugin.class);
-
-		project.beforeEvaluate(new Action<Project>() {
-			@Override
-			public void execute(Project project) {
-				ForgeExtension minecraft = project.getExtensions().findByType(ForgeExtension.class);
-				System.out.println("\n\n\n\n");
-				System.out.println("Pre:  " + minecraft.getForgeVersion());
-				minecraft.setForgeVersion("1.9.4-12.17.0.1932-1.9.4");
-				System.out.println("Post: " + minecraft.getForgeVersion());
-				System.out.println("\n\n\n\n");
-			}
-		});
-
 	}
 
 }
