@@ -14,18 +14,11 @@ buildscript {
 
 plugins {
 	id 'java'
-	id "temportalist.automata" version "0.0.1m3"
+	id "temportalist.automata" version "0.0.1m6"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
-
-minecraft {
-	//version = "1.9.4-12.17.0.1954"
-	runDir = "run"
-	mappings = "snapshot_20160518"
-}
-
 
 automata {
 	message = "This is a message from the build.gradle!"
@@ -39,8 +32,7 @@ automata {
 	versionPatch = 1
 
 	versionMinecraft = "1.9.4"
-	versionForge = "12.17.0.1932"
-	versionForgeSuffix = "1.9.4"
+	versionForge = "12.17.0.1932-1.9.4"
 	versionMappings = "snapshot_20160518"
 
 	curseID = 12345

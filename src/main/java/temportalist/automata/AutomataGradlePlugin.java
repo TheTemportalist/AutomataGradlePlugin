@@ -1,6 +1,5 @@
 package temportalist.automata;
 
-import net.minecraftforge.gradle.user.patcherUser.forge.ForgePlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
@@ -18,12 +17,8 @@ public class AutomataGradlePlugin implements Plugin<Project> {
 	public void apply(final Project project) {
 		this.applyForge(project);
 
-		// START: testing extensions and tasks
-
 		this.applyExtensions(project);
 		this.applyTasks(project);
-
-		ForgePlugin forge = project.getPlugins().findPlugin(ForgePlugin.class);
 
 	}
 
