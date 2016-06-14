@@ -1,9 +1,11 @@
 package temportalist.automata;
 
+import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
+import org.gradle.language.jvm.tasks.ProcessResources;
 
 import static java.lang.System.out;
 
@@ -12,7 +14,7 @@ import static java.lang.System.out;
  *
  * @author TheTemportalist
  */
-public class TaskDisplayDetails extends DefaultTask {
+public class TaskDetailsDisplay extends DefaultTask {
 
 	@TaskAction
 	public void run() throws TaskExecutionException {
@@ -27,29 +29,36 @@ public class TaskDisplayDetails extends DefaultTask {
 
 			out.println("----------");
 
+			out.println(extension.organization);
+
 			Project project = this.getProject();
 			out.println("Group: " + project.getGroup());
 			out.println("Version: " + project.getVersion());
 
 			out.println();
 
-			if (extension.minecraft != null) {
+			ForgeExtension minecraft = project.getExtensions().findByType(ForgeExtension.class);
+			if (minecraft != null) {
 				out.println("Minecraft:");
-				out.println("Version: " + extension.minecraft.getVersion());
-				out.println("Forge: " + extension.minecraft.getForgeVersion());
-				out.println("Run Dir: " + extension.minecraft.getRunDir());
-				out.println("Mappings: " + extension.minecraft.getMappings());
+				out.println("Version: " + minecraft.getVersion());
+				out.println("Forge: " + minecraft.getForgeVersion());
+				out.println("Run Dir: " + minecraft.getRunDir());
+				out.println("Mappings: " + minecraft.getMappings());
 				out.println();
 			}
 
-			if (extension.processResources != null) {
+			Object processResourcesObj = project.getTasks().findByName("processResources");
+			if (processResourcesObj != null &&
+					processResourcesObj instanceof ProcessResources) {
+				ProcessResources processResources = (ProcessResources) processResourcesObj;
+
 				out.println("Process Resources:");
 
 				out.println("Version: " +
-						extension.processResources.getInputs().getProperties().get("version")
+						processResources.getInputs().getProperties().get("version")
 				);
 				out.println("MCVersion: " +
-						extension.processResources.getInputs().getProperties().get("mcversion")
+						processResources.getInputs().getProperties().get("mcversion")
 				);
 
 				out.println();
