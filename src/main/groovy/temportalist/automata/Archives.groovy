@@ -58,7 +58,7 @@ class Archives {
 								id = developerMap.get(EnumDeveloperStat.ID)
 								name = developerMap.get(EnumDeveloperStat.NAME)
 								roles {
-									role = developerMap.get(EnumDeveloperStat.ROLE)
+									role = developerMap.get(EnumDeveloperStat.ROLE).toString()
 								}
 							}
 						}
