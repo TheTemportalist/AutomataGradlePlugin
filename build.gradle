@@ -20,12 +20,14 @@ if (project.hasProperty("tempGradle.publish.secret")) {
 	project.properties["gradle.publish.secret"] = project.property("tempGradle.publish.secret")
 }
 
+println project.hasProperty("gradle.publish.key")
+
 def getVersion() {
 	def v = "0.0.1"
 	if (project.hasProperty("MANUAL"))
 		v += "m${MANUAL}"
 	else if (project.hasProperty("BUILD_NUMBER"))
-		v += "b${BUILD_NUMBER}"
+		v += ".${BUILD_NUMBER}"
 	return v
 }
 
