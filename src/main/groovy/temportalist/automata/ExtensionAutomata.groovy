@@ -91,19 +91,23 @@ class ExtensionAutomata {
 
 	private void setVersionString() {
 		if (this.versionMinecraft == null) return
-		String versionStr = String.format(
-				"%s-%d.%d.%d",
-				this.versionMinecraft,
-				this.versionMajor, this.versionMinor, this.versionPatch
-		)
-		if (this.manualBuildNumber != null) versionStr += "b" + this.manualBuildNumber
-		if (this.autoBuildNumber != null) versionStr += "." + this.autoBuildNumber
+		String versionStr = this.versionMinecraft + "-" + this.getVersionPure()
 		this.project.setVersion(versionStr)
 	}
 
 	public String getVersion() {
 		this.setVersionString()
 		return this.project.getVersion()
+	}
+
+	public String getVersionPure() {
+		String versionStr = String.format(
+				"%d.%d.%d",
+				this.versionMajor, this.versionMinor, this.versionPatch
+		)
+		if (this.manualBuildNumber != null) versionStr += "b" + this.manualBuildNumber
+		if (this.autoBuildNumber != null) versionStr += "." + this.autoBuildNumber
+		return versionStr
 	}
 
 	public void setVersionMinecraft(String versionMinecraft) {
@@ -148,12 +152,12 @@ class ExtensionAutomata {
 		this.resources = resources
 		if (!this.resources) return
 		project.processResources {
-			inputs.property "version", project.getVersion()
+			inputs.property "version", this.getVersionPure()
 			inputs.property "mcversion", this.minecraft.getVersion()
 
 			from (project.sourceSets.main.resources.srcDirs) {
 				include 'mcmod.info'
-				expand 'version': project.getVersion(), 'mcversion': this.minecraft.getVersion()
+				expand 'version': this.getVersionPure(), 'mcversion': this.minecraft.getVersion()
 			}
 
 			from (project.sourceSets.main.resources.srcDirs) {
