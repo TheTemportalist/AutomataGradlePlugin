@@ -13,11 +13,11 @@ ext {
 
 if (project.hasProperty("tempGradle.publish.key")) {
 	println "Found gradle publish key"
-	project.setProperty("gradle.publish.key", project.property("tempGradle.publish.key"))
+	project.properties["gradle.publish.key"] = project.property("tempGradle.publish.key")
 }
 if (project.hasProperty("tempGradle.publish.secret")) {
 	println "Found gradle publish secret"
-	project.setProperty("gradle.publish.secret", project.property("tempGradle.publish.secret"))
+	project.properties["gradle.publish.secret"] = project.property("tempGradle.publish.secret")
 }
 
 def getVersion() {
