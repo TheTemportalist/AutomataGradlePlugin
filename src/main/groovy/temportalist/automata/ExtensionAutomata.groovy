@@ -146,6 +146,11 @@ class ExtensionAutomata {
 	public void replace(Closure<?> closure) {
 		this.replace = new PropertyReplace()
 		this.replace.with closure
+
+		Map<String, Object> replaceMap = new HashMap<>()
+		replaceMap.put(this.replace.version, this.getVersionPure())
+		replaceMap.put(this.replace.forge, this.replace.forge + this.getVersionForge())
+		this.minecraft.replace(replaceMap)
 	}
 
 	void setResources(boolean resources) {
