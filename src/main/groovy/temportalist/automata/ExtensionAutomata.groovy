@@ -79,12 +79,12 @@ class ExtensionAutomata {
 		this.setVersionString();
 	}
 
-	public void setManualBuildNumber(int number) {
+	public void setManualBuildNumber(String number) {
 		this.manualBuildNumber = number;
 		this.setVersionString();
 	}
 
-	public void setAutoBuildNumber(int number) {
+	public void setAutoBuildNumber(String number) {
 		this.autoBuildNumber = number;
 		this.setVersionString();
 	}
