@@ -90,8 +90,10 @@ class ExtensionAutomata {
 	}
 
 	private void setVersionString() {
+		if (this.versionMinecraft == null) return
 		String versionStr = String.format(
-				"%d.%d.%d",
+				"%s-%d.%d.%d",
+				this.versionMinecraft,
 				this.versionMajor, this.versionMinor, this.versionPatch
 		)
 		if (this.manualBuildNumber != null) versionStr += "b" + this.manualBuildNumber
@@ -106,6 +108,7 @@ class ExtensionAutomata {
 
 	public void setVersionMinecraft(String versionMinecraft) {
 		this.versionMinecraft = versionMinecraft
+		this.setVersionString()
 		this.checkForgeVersions()
 	}
 
