@@ -1,0 +1,15 @@
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring root project 'AutomataGradle'.
+> Failed to notify project evaluation listener.
+   > You must set the Forge version!
+   > MISSING REPLACEMENT DATA FOR API_GROUP_DIR
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output.
+
+BUILD FAILED
+
+Total time: 3.914 secs

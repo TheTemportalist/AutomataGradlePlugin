@@ -12,7 +12,7 @@ buildscript {
 
 plugins {
 	id 'java'
-	id "temportalist.automata" version "0.0.1m17"
+	id "temportalist.automata" version "0.0.1m18"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7
