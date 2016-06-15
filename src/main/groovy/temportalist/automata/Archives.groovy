@@ -26,7 +26,7 @@ class Archives {
 			}
 			pom {
 				groupId = projectObj.group
-				version = String.format("%s-%s", minecraft.getVersion(), projectObj.version)
+				version = projectObj.version
 				artifactId = archiveName
 				project {
 					name = archiveName
