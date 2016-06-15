@@ -23,12 +23,10 @@ if (project.hasProperty("tempGradle.publish.secret")) {
 
 def getVersion() {
 	def v = "0.0.1"
-	println project.hasProperty("MANUAL")
-	println project.hasProperty("BUILD_NUMBER")
 	if (project.hasProperty("MANUAL"))
 		v += "m${MANUAL}"
-	else if (project.hasProperty("BUILD_NUMBER"))
-		v += ".${BUILD_NUMBER}"
+	else if (System.getenv("BUILD_NUMBER") != null)
+		v += ".${System.getenv("BUILD_NUMBER")}"
 	return v
 }
 
