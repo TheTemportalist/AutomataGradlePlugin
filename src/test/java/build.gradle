@@ -12,31 +12,78 @@ buildscript {
 
 plugins {
 	id 'java'
-	id "temportalist.automata" version "0.0.1m8"
+	id "temportalist.automata" version "0.0.1m14"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
-automata {
-	message = "This is a message from the build.gradle!"
+gitName = "AutomataGradlePlugin"
+gitBase = "https://github.com/TheTemportalist/" + gitName + "/"
+gitUrl = gitBase + "tree/master/src/test/java/"
 
+automata {
+
+	// ~~~ Start: Project ID
 	organization = "temportalist"
 	groupName = "test"
-	archiveName = "Test"
+	// ~~~~~ End: Project ID
 
+	// ~~~ Start: Versioning
 	versionMajor = 0
 	versionMinor = 0
 	versionPatch = 1
+	if (project.hasProperty("MANUAL"))
+		manualBuildNumber = MANUAL
+	if (project.hasProperty("BUILD_NUMBER"))
+		autoBuildNumber = BUILD_NUMBER
+	// ~~~~~ End: Versioning
 
+	// ~~~ Start: Forge Data
 	versionMinecraft = "1.9.4"
 	versionForge = "12.17.0.1932-1.9.4"
 	versionMappings = "snapshot_20160518"
+	// ~~~~~ End: Forge Data
 
+	// ~~~ Start: Replacements
+	replace { // MUST be defined after "Versioning" and "Forge Data"
+		version = "@MOD_VERSION@"
+		forge = 'required-after:Forge'
+		replaceMap = [:]
+	}
+	// ~~~~~ End: Replacements
+
+	// ~~~ Start: CurseForge
 	curseKey = ""
 	curseProject {
 		id = "12345"
 		releaseType = "release"
 	}
+	// ~~~~~ End: CurseForge
+
+	// ~~~ Start: Archives
+	if (project.hasProperty("dddUser") && project.hasProperty("dddPass")) {
+		archives {
+			name = "Test"
+			description = gitName
+			repoUrl = "http://doubledoordev.net:8082/artifactory/mods"
+			repoUsername = dddUser
+			repoPassword = dddPass
+			sourceUrl = gitUrl
+			scmUrl = "scm:git:git://github.com/TheTemportalist/" + gitName + ".git"
+			issueTrackerType = "github"
+			issueTrackerUrl = gitBase + "issues"
+			licenseType = "Apache License Version 2.0"
+			licenseUrl = gitUrl + "LICENSE"
+			developers = [
+			        [
+			                "id": "TheTemportalist",
+							"name": "The Temportalist",
+							"role": "developer"
+			        ]
+			]
+		}
+	}
+	// ~~~~~ End: Archives
 
 }

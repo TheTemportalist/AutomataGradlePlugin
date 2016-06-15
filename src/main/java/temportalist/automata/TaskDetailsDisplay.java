@@ -18,19 +18,9 @@ public class TaskDetailsDisplay extends DefaultTask {
 
 	@TaskAction
 	public void run() throws TaskExecutionException {
+
+		out.println("----------");
 		try {
-			ExtensionAutomata extension = this.getProject().getExtensions().findByType(ExtensionAutomata.class);
-			out.println(extension.message);
-
-			out.println(extension.sampleEXT);
-			if (extension.sampleEXT != null) {
-				out.println(extension.sampleEXT.getClass().getName());
-			}
-
-			out.println("----------");
-
-			out.println(extension.organization);
-
 			Project project = this.getProject();
 			out.println("Group: " + project.getGroup());
 			out.println("Version: " + project.getVersion());
@@ -63,12 +53,14 @@ public class TaskDetailsDisplay extends DefaultTask {
 
 				out.println();
 			}
-
 		}
 		catch(Exception e) {
 			throw new TaskExecutionException(this,
-					new Exception("Exception occurred while processing sampleTask", e)
+					new Exception("Exception occurred while processing displayDetails", e)
 			);
+		}
+		finally {
+			out.println("----------");
 		}
 	}
 

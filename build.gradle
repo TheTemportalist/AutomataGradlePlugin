@@ -38,6 +38,7 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 repositories {
 	jcenter()
+	mavenCentral()
 	repositories {
 		maven {
 			url "https://plugins.gradle.org/m2/"
@@ -68,6 +69,15 @@ dependencies {
 	// CurseForge Gradle cursegradle
 	compile group: 'gradle.plugin.com.matthewprenger', name: 'CurseGradle', version: '1.0.7'
 
+}
+
+idea {
+	module {
+		// if you hate browsing Javadoc
+		downloadJavadoc = false
+		// and love reading sources :)
+		downloadSources = true
+	}
 }
 
 jar.manifest.mainAttributes([
