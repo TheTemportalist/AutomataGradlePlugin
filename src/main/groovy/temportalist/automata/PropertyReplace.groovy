@@ -1,13 +1,11 @@
-package temportalist.automata;
-
-import java.util.Map;
+package temportalist.automata
 
 /**
- * Created by TheTemportalist on 6/15/2016.
  *
+ * Created by TheTemportalist on 6/15/2016.
  * @author TheTemportalist
  */
-public class PropertyReplace {
+class PropertyReplace {
 
 	String version, forge;
 	Map<String, Object> replaceMap;

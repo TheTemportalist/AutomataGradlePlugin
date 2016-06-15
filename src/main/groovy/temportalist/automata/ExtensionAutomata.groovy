@@ -1,20 +1,15 @@
-package temportalist.automata;
+package temportalist.automata
 
-import com.matthewprenger.cursegradle.CurseExtension;
-import groovy.lang.Closure;
-import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
-import org.gradle.api.Project;
-import org.gradle.api.plugins.JavaPluginConvention;
-import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetContainer;
-import org.gradle.language.jvm.tasks.ProcessResources;
+import com.matthewprenger.cursegradle.CurseExtension
+import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
+import org.gradle.api.Project
 
 /**
  *
- * Created by TheTemportalist on 6/12/2016.
+ * Created by TheTemportalist on 6/15/2016.
  * @author TheTemportalist
  */
-public class ExtensionAutomata {
+class ExtensionAutomata {
 
 	private final Project project;
 	private final ForgeExtension minecraft;
@@ -30,6 +25,7 @@ public class ExtensionAutomata {
 	String versionMinecraft, versionForge, runDir = "run", versionMappings;
 
 	PropertyReplace replace;
+	boolean resources;
 
 	String curseKey = null;
 
@@ -37,8 +33,8 @@ public class ExtensionAutomata {
 
 	public ExtensionAutomata(final Project project) {
 		this.project = project;
-		this.minecraft = project.getExtensions().findByType(ForgeExtension.class);
-		this.curseforge = project.getExtensions().findByType(CurseExtension.class);
+		this.minecraft = project.getExtensions().findByType(ForgeExtension)
+		this.curseforge = project.getExtensions().findByType(CurseExtension);
 		this.init();
 	}
 
@@ -46,12 +42,8 @@ public class ExtensionAutomata {
 
 		this.minecraft.setRunDir(this.runDir);
 
-		this.replace = new PropertyReplace();
-
 		// Makes sure CurseGradle doesn't complain if the user doesn't use curse
 		this.curseforge.setApiKey("");
-
-		this.archives = new PropertyArchives();
 
 	}
 
@@ -69,7 +61,7 @@ public class ExtensionAutomata {
 		if (this.organization == null || this.groupName == null)
 			return;
 		this.project.setGroup(String.format(
-				"%1$s.%2$s", this.organization, this.groupName
+				"%s.%s", this.organization, this.groupName
 		));
 	}
 
@@ -102,7 +94,7 @@ public class ExtensionAutomata {
 
 	private void setVersionString() {
 		String versionStr = String.format(
-				"%1$d.%2$d.%3$d",
+				"%d.%d.%d",
 				this.versionMajor, this.versionMinor, this.versionPatch
 		);
 		if (this.isManualBuild) versionStr += "b" + this.manualBuildNumber;
@@ -123,7 +115,7 @@ public class ExtensionAutomata {
 	private void checkForgeVersions() {
 		if (this.versionMinecraft == null || this.versionForge == null)
 			return;
-		this.minecraft.setVersion(String.format("%1$s-%2$s",
+		this.minecraft.setVersion(String.format("%s-%s",
 				this.versionMinecraft, this.versionForge
 		));
 	}
@@ -139,9 +131,27 @@ public class ExtensionAutomata {
 	}
 
 	public void replace(Closure<?> closure) {
-		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
-		closure.setDelegate(this.replace);
-		closure.call();
+		this.replace = new PropertyReplace()
+		this.replace.with closure
+	}
+
+	void setResources(boolean resources) {
+		this.resources = resources
+		if (!this.resources) return
+		project.processResources {
+			inputs.property "version", project.getVersion()
+			inputs.property "mcversion", this.minecraft.getVersion()
+
+			from (project.sourceSets.main.resources.srcDirs) {
+				include 'mcmod.info'
+				expand 'version': project.getVersion(), 'mcversion': this.minecraft.getVersion()
+			}
+
+			from (project.sourceSets.main.resources.srcDirs) {
+				exclude 'mcmod.info'
+			}
+
+		}
 	}
 
 	public void setCurseKey(String curseKey) {
@@ -154,40 +164,9 @@ public class ExtensionAutomata {
 	}
 
 	public void archives(Closure<?> closure) {
-		closure.setResolveStrategy(Closure.DELEGATE_FIRST);
-		closure.setDelegate(this.archives);
-		closure.call();
+		this.archives = new PropertyArchives()
+		this.archives.with closure
 		this.archives.setupArchives(this.project);
-	}
-
-	public void loadInto(Project project) {
-
-		Object processResourcesObj = project.getTasks().findByName("processResources");
-		if (processResourcesObj instanceof ProcessResources) {
-			ProcessResources processResources = (ProcessResources) processResourcesObj;
-
-			processResources.getInputs().property(
-					"version", project.getVersion()
-			);
-			processResources.getInputs().property(
-					"mcversion", minecraft.getVersion()
-			);
-
-			SourceSetContainer sets = project.getConvention().getPlugin(JavaPluginConvention.class)
-					.getSourceSets();
-			SourceSet mainSet = sets.findByName("main");
-			/* TODO
-				from(sourceSets.main.resources.srcDirs) {
-					include 'mcmod.info'
-					expand 'version': project.version, 'mcversion': project.minecraft.version
-				}
-
-				from(sourceSets.main.resources.srcDirs) {
-					exclude 'mcmod.info'
-				}
-			*/
-
-		}
 	}
 
 }

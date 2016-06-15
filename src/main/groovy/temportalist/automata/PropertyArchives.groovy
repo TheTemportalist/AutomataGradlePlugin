@@ -1,18 +1,13 @@
-package temportalist.automata;
+package temportalist.automata
 
-import org.gradle.api.Project;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.gradle.api.Project
 
 /**
- * Created by TheTemportalist on 6/15/2016.
  *
+ * Created by TheTemportalist on 6/15/2016.
  * @author TheTemportalist
  */
-public class PropertyArchives {
+class PropertyArchives {
 
 	String name, description;
 	String repoUrl, repoUsername, repoPassword;

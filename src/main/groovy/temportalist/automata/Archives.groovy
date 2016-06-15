@@ -48,17 +48,17 @@ class Archives {
 						license {
 							name = licenseType
 							url = urlLicense
-							distribution 'repo'
+							distribution = 'repo'
 						}
 					}
 
 					developers {
 						for (developerMap in developerMaps) {
 							developer {
-								id developerMap.get(EnumDeveloperStat.ID)
-								name developerMap.get(EnumDeveloperStat.NAME)
+								id = developerMap.get(EnumDeveloperStat.ID)
+								name = developerMap.get(EnumDeveloperStat.NAME)
 								roles {
-									role developerMap.get(EnumDeveloperStat.ROLE)
+									role = developerMap.get(EnumDeveloperStat.ROLE)
 								}
 							}
 						}

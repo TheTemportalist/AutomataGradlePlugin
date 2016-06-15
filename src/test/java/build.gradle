@@ -12,15 +12,17 @@ buildscript {
 
 plugins {
 	id 'java'
-	id "temportalist.automata" version "0.0.1m14"
+	id "temportalist.automata" version "0.0.1m17"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
-gitName = "AutomataGradlePlugin"
-gitBase = "https://github.com/TheTemportalist/" + gitName + "/"
-gitUrl = gitBase + "tree/master/src/test/java/"
+ext {
+	gitName = "AutomataGradlePlugin"
+	gitBase = "https://github.com/TheTemportalist/" + project.gitName + "/"
+	gitUrl = project.gitBase + "tree/master/src/test/java/"
+}
 
 automata {
 
@@ -53,6 +55,10 @@ automata {
 	}
 	// ~~~~~ End: Replacements
 
+	// ~~~ Start: Resources
+	resources = true
+	// ~~~~~ End: Resources
+
 	// ~~~ Start: CurseForge
 	curseKey = ""
 	curseProject {
@@ -65,16 +71,16 @@ automata {
 	if (project.hasProperty("dddUser") && project.hasProperty("dddPass")) {
 		archives {
 			name = "Test"
-			description = gitName
+			description = project.gitName
 			repoUrl = "http://doubledoordev.net:8082/artifactory/mods"
 			repoUsername = dddUser
 			repoPassword = dddPass
-			sourceUrl = gitUrl
-			scmUrl = "scm:git:git://github.com/TheTemportalist/" + gitName + ".git"
+			sourceUrl = project.gitUrl
+			scmUrl = "scm:git:git://github.com/TheTemportalist/" + project.gitName + ".git"
 			issueTrackerType = "github"
-			issueTrackerUrl = gitBase + "issues"
+			issueTrackerUrl = project.gitBase + "issues"
 			licenseType = "Apache License Version 2.0"
-			licenseUrl = gitUrl + "LICENSE"
+			licenseUrl = project.gitUrl + "LICENSE"
 			developers = [
 			        [
 			                "id": "TheTemportalist",
