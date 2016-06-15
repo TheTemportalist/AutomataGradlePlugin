@@ -19,8 +19,7 @@ class ExtensionAutomata {
 	String organization, groupName;
 	// Project versioning using Semver
 	int versionMajor = 0, versionMinor = 0, versionPatch = 0;
-	private boolean isManualBuild = false, isAutoBuild = false;
-	int manualBuildNumber = 0, autoBuildNumber = 0;
+	String manualBuildNumber = null, autoBuildNumber = null;
 
 	String versionMinecraft, versionForge, runDir = "run", versionMappings;
 
@@ -82,13 +81,11 @@ class ExtensionAutomata {
 
 	public void setManualBuildNumber(int number) {
 		this.manualBuildNumber = number;
-		this.isManualBuild = true;
 		this.setVersionString();
 	}
 
 	public void setAutoBuildNumber(int number) {
 		this.autoBuildNumber = number;
-		this.isAutoBuild = true;
 		this.setVersionString();
 	}
 
@@ -97,8 +94,8 @@ class ExtensionAutomata {
 				"%d.%d.%d",
 				this.versionMajor, this.versionMinor, this.versionPatch
 		);
-		if (this.isManualBuild) versionStr += "b" + this.manualBuildNumber;
-		if (this.isAutoBuild) versionStr += "." + this.autoBuildNumber;
+		if (this.manualBuildNumber != null) versionStr += "b" + this.manualBuildNumber;
+		if (this.autoBuildNumber != null) versionStr += "." + this.autoBuildNumber;
 		this.project.setVersion(versionStr);
 	}
 
