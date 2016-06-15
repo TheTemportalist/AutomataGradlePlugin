@@ -93,15 +93,24 @@ class ExtensionAutomata {
 		String versionStr = String.format(
 				"%d.%d.%d",
 				this.versionMajor, this.versionMinor, this.versionPatch
-		);
-		if (this.manualBuildNumber != null) versionStr += "b" + this.manualBuildNumber;
-		if (this.autoBuildNumber != null) versionStr += "." + this.autoBuildNumber;
-		this.project.setVersion(versionStr);
+		)
+		if (this.manualBuildNumber != null) versionStr += "b" + this.manualBuildNumber
+		if (this.autoBuildNumber != null) versionStr += "." + this.autoBuildNumber
+		this.project.setVersion(versionStr)
+	}
+
+	public String getVersion() {
+		this.setVersionString()
+		return this.project.getVersion()
 	}
 
 	public void setVersionMinecraft(String versionMinecraft) {
-		this.versionMinecraft = versionMinecraft;
-		this.checkForgeVersions();
+		this.versionMinecraft = versionMinecraft
+		this.checkForgeVersions()
+	}
+
+	public String getVersionMinecraft() {
+		return this.versionMinecraft
 	}
 
 	public void setVersionForge(String versionForge) {
