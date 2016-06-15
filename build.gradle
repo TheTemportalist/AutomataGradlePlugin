@@ -13,7 +13,7 @@ ext {
 
 if (project.hasProperty("tempGradle.publish.key")) {
 	println "Found gradle publish key"
-	project.properties."gradle.publish.key" = project.property("tempGradle.publish.key")
+	gradle.publish.key = tempGradle.publish.key
 
 }
 if (project.hasProperty("tempGradle.publish.secret")) {
