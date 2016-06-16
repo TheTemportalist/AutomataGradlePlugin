@@ -152,7 +152,7 @@ class ExtensionAutomata {
 		replaceMap.put(this.replace.version, this.getVersionPure())
 		replaceMap.put(this.replace.forge,
 				this.replace.forge + "@[" + this.getVersionForge() + ",)")
-		this.minecraft.replace(replaceMap) // TODO, this doesnt seem to do anything
+		this.minecraft.replace(replaceMap)
 	}
 
 	void setResources(boolean resources) {
