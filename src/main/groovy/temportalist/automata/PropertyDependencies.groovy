@@ -13,10 +13,12 @@ class PropertyDependencies {
 	Map<String, String> repositories;
 	PropertyDependency[] dependencies;
 
-	def dependencies(Closure<?>[] closures) {
+	def setDependencies(Closure<?>[] closures) {
 		this.dependencies = new PropertyDependency[closures.length]
-		//for (int i = 0; i < closures.length; i++)
-		//	this.dependencies.with closures[i]
+		for (int i = 0; i < closures.length; i++) {
+			this.dependencies[i] = new PropertyDependency()
+			this.dependencies[i].with(closures[i])
+		}
 	}
 
 	def load(Project project, ForgeExtension minecraft) {
@@ -30,31 +32,10 @@ class PropertyDependencies {
 				}
 			}
 		}
+
 		if (this.dependencies != null && this.dependencies.length > 0) {
 			for (PropertyDependency dependency : this.dependencies) {
-
-				project.dependencies.add(
-						dependency.compileWith,
-						String.format("%s:%s:%s",
-								dependency.group, dependency.name, dependency.version
-						)
-				)
-				if (dependency.replace != null) {
-					System.out.println(dependency.replace.properties)
-					/*
-					def replaceClosure = dependency.get("replace") as Closure<?>
-					System.out.println(replaceClosure.properties.entrySet())
-					def original = String.format("%s:%s",
-							replaceClosure.getProperty("instruction"),
-							replaceClosure.getProperty("modid")
-					)
-					minecraft.replace(original,
-							String.format("%s@%s", original,
-									replaceClosure.getProperty("versionRange")
-							)
-					)
-					*/
-				}
+				dependency.load(project, minecraft)
 			}
 		}
 	}
