@@ -13,7 +13,7 @@ class PropertyDependencies {
 	Map<String, String> repositories;
 	PropertyDependency[] dependencies;
 
-	def setDependencies(Closure<?>[] closures) {
+	def dependencies(Closure<?>[] closures) {
 		this.dependencies = new PropertyDependency[closures.length]
 		for (int i = 0; i < closures.length; i++)
 			this.dependencies.with closures[i]

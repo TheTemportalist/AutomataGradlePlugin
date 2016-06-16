@@ -10,7 +10,7 @@ class PropertyDependency {
 	String group, name, version, compileWith;
 	PropertyReplaceDep replace;
 
-	def setReplace(Closure<?> closure) {
+	def replace(Closure<?> closure) {
 		this.replace = new PropertyReplaceDep();
 		this.replace.with(closure)
 	}
