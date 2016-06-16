@@ -13,7 +13,7 @@ class PropertyDependencies {
 	Map<String, String> repositories;
 	Map<String, Object>[] dependencies;
 
-	static def load(Project project, ForgeExtension minecraft) {
+	def load(Project project, ForgeExtension minecraft) {
 		project.getRepositories().mavenCentral()
 		project.getRepositories().jcenter()
 		project.repositories {
