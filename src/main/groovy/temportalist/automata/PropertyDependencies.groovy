@@ -17,12 +17,10 @@ class PropertyDependencies {
 		project.getRepositories().mavenCentral()
 		project.getRepositories().jcenter()
 		if (this.repositories != null && !this.repositories.isEmpty()) {
-			project.repositories {
-				for (Map.Entry<String, String> entry : this.repositories) {
-					maven {
-						name = entry.getKey()
-						url = entry.getValue()
-					}
+			for (Map.Entry<String, String> entry : this.repositories) {
+				project.repositories.maven {
+					name = entry.getKey()
+					url = entry.getValue()
 				}
 			}
 		}
