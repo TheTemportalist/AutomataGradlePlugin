@@ -189,6 +189,8 @@ class ExtensionAutomata {
 
 	public void curseProject(Closure<?> closure) {
 		this.curseforge.project(closure);
+		def id = closure.getProperty("id")
+		this.project.getTasks().findByName("curseforge" + id).dependsOn(PluginAutomata.makeChangelog)
 	}
 
 	public void archives(Closure<?> closure) {
