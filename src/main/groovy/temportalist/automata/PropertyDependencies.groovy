@@ -15,8 +15,8 @@ class PropertyDependencies {
 
 	def dependencies(Closure<?>[] closures) {
 		this.dependencies = new PropertyDependency[closures.length]
-		for (int i = 0; i < closures.length; i++)
-			this.dependencies.with closures[i]
+		//for (int i = 0; i < closures.length; i++)
+		//	this.dependencies.with closures[i]
 	}
 
 	def load(Project project, ForgeExtension minecraft) {
