@@ -7,6 +7,8 @@ import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
 import org.gradle.language.jvm.tasks.ProcessResources;
 
+import java.util.Map;
+
 import static java.lang.System.out;
 
 /**
@@ -34,6 +36,10 @@ public class TaskDetailsDisplay extends DefaultTask {
 				out.println("Forge: " + minecraft.getForgeVersion());
 				out.println("Run Dir: " + minecraft.getRunDir());
 				out.println("Mappings: " + minecraft.getMappings());
+				out.println("Replacements;");
+				for (Map.Entry<String, Object> replace : minecraft.getReplacements().entrySet()) {
+					out.println("\t\"" + replace.getKey() + "\": \"" + replace.getValue() + "\"");
+				}
 				out.println();
 			}
 

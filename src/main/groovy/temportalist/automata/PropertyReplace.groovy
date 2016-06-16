@@ -8,7 +8,7 @@ package temportalist.automata
 class PropertyReplace {
 
 	String version, forge;
-	Map<String, Object> replaceMap;
+	Map<String, Object> replaceMap = new HashMap<>();
 
 	public void setVersion(String version) {
 		this.version = version;
