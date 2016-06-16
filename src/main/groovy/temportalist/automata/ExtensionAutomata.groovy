@@ -3,6 +3,7 @@ package temportalist.automata
 import com.matthewprenger.cursegradle.CurseExtension
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
 import org.gradle.api.Project
+import org.gradle.api.Task
 
 /**
  *
@@ -30,6 +31,8 @@ class ExtensionAutomata {
 
 	String curseKey = null;
 
+	Map<String, PropertyChangelog> changelogs;
+
 	PropertyArchives archives;
 
 	public ExtensionAutomata(final Project project) {
@@ -45,6 +48,8 @@ class ExtensionAutomata {
 
 		// Makes sure CurseGradle doesn't complain if the user doesn't use curse
 		this.curseforge.setApiKey("");
+
+		this.changelogs = new HashMap<>()
 
 	}
 
@@ -182,15 +187,33 @@ class ExtensionAutomata {
 		}
 	}
 
+	def changelog(Closure<?> closure) {
+		def changelog = new PropertyChangelog()
+		changelog.with(closure)
+		changelog.createTask(this.project, this)
+		this.changelogs.put(changelog.id, changelog)
+	}
+
 	public void setCurseKey(String curseKey) {
 		this.curseKey = curseKey;
 		this.curseforge.setApiKey(this.curseKey);
 	}
 
 	public void curseProject(Closure<?> closure) {
-		this.curseforge.project(closure);
+
 		def id = closure.getProperty("id")
-		this.project.getTasks().findByName("curseforge" + id).dependsOn(PluginAutomata.makeChangelog)
+
+		def changelogObj
+		if (this.changelogs.containsKey(id)) {
+			PropertyChangelog changelogProp = this.changelogs.get(id)
+			changelogObj = project.file(changelogProp.getFileName())
+		}
+		else {
+			changelogObj = "No changelog defined"
+		}
+		closure.setProperty("changelog", changelogObj)
+
+		this.curseforge.project(closure);
 	}
 
 	public void archives(Closure<?> closure) {
@@ -221,6 +244,14 @@ class ExtensionAutomata {
 		if (System.getenv("BUILD_NUMBER") != null) return "${System.getenv("BUILD_NUMBER")}"
 		else if (project.hasProperty("bambooBuildNumber")) return project.bambooBuildNumber
 		else return getDate()
+	}
+
+	def onAfterEvaluate() {
+		for (PropertyChangelog changelog : this.changelogs.values()) {
+			Task curseforgeTask = this.project.getTasks().findByName("curseforge" + changelog.id)
+			if (curseforgeTask != null) changelog.linkToCurseforge(curseforgeTask)
+			else System.out.println("ERROR: curseforge" + changelog.id + " does not exist.")
+		}
 	}
 
 	// ~~~~~ End: Miscellaneous Functions

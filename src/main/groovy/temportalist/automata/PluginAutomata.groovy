@@ -2,7 +2,6 @@ package temportalist.automata
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
 
 /**
  *
@@ -11,7 +10,7 @@ import se.bjurr.gitchangelog.plugin.gradle.GitChangelogTask
  */
 class PluginAutomata implements Plugin<Project> {
 
-	static GitChangelogTask makeChangelog;
+	static ExtensionAutomata automataEXT;
 
 	@Override
 	void apply(Project project) {
@@ -22,6 +21,10 @@ class PluginAutomata implements Plugin<Project> {
 
 		applyExtensions(project);
 		applyTasks(project);
+
+		project.afterEvaluate {
+			automataEXT.onAfterEvaluate()
+		}
 	}
 
 	private static void applyPlugin(final Project project, String id) {
@@ -44,11 +47,10 @@ class PluginAutomata implements Plugin<Project> {
 
 	private static def applyGitChangelog(Project project) {
 		applyPlugin(project, "se.bjurr.gitchangelog.git-changelog-gradle-plugin")
-		makeChangelog = project.getTasks().create("makeChangelog", GitChangelogTask)
 	}
 
 	private static void applyExtensions(final Project project) {
-		ExtensionAutomata automataEXT = new ExtensionAutomata(project);
+		automataEXT = new ExtensionAutomata(project);
 		project.getExtensions().add("automata", automataEXT);
 	}
 
