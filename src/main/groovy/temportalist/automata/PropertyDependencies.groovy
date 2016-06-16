@@ -32,7 +32,7 @@ class PropertyDependencies {
 								dependency.get("group"), dependency.get("name"), dependency.get("version")
 						)
 				)
-				if (dependency.hasProperty("replace")) {
+				if (dependency.containsKey("replace")) {
 					def replaceClosure = dependency.get("replace") as Closure<?>
 					def original = String.format("%s:%s",
 							replaceClosure.getProperty("instruction"),
