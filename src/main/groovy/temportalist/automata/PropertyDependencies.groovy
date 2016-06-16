@@ -34,6 +34,8 @@ class PropertyDependencies {
 				)
 				if (dependency.containsKey("replace")) {
 					def replaceClosure = dependency.get("replace") as Closure<?>
+					System.out.println(replaceClosure)
+					/*
 					def original = String.format("%s:%s",
 							replaceClosure.getProperty("instruction"),
 							replaceClosure.getProperty("modid")
@@ -43,6 +45,7 @@ class PropertyDependencies {
 									replaceClosure.getProperty("versionRange")
 							)
 					)
+					*/
 				}
 			}
 		}
