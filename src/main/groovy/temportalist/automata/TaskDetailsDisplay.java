@@ -35,7 +35,7 @@ public class TaskDetailsDisplay extends DefaultTask {
 			Iterator<ArtifactRepository> iterator = project.getRepositories().iterator();
 			while (iterator.hasNext()) {
 				ArtifactRepository repo = iterator.next();
-				out.println(repo.getName());
+				out.println("\t" + repo.getName());
 			}
 
 			out.println();

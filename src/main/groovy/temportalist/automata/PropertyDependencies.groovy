@@ -24,7 +24,7 @@ class PropertyDependencies {
 				}
 			}
 		}
-		if (this.dependencies != null && !this.dependencies.isEmpty()) {
+		if (this.dependencies != null && this.dependencies.length > 0) {
 			for (Map<String, Object> dependency : this.dependencies) {
 				project.dependencies.add(
 						dependency.get("compileWith"),
