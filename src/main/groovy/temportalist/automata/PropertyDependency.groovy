@@ -10,6 +10,11 @@ class PropertyDependency {
 	String group, name, version, compileWith;
 	PropertyReplaceDep replace;
 
+	def setReplace(Closure<?> closure) {
+		this.replace = new PropertyReplaceDep();
+		this.replace.with(closure)
+	}
+
 	static class PropertyReplaceDep {
 		String instruction, modid, versionRange;
 	}
