@@ -1,9 +1,10 @@
 package temportalist.automata
 
 import com.matthewprenger.cursegradle.CurseExtension
+import com.matthewprenger.cursegradle.CurseProject
+import com.matthewprenger.cursegradle.CurseUploadTask
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension
 import org.gradle.api.Project
-import org.gradle.api.Task
 
 /**
  *
@@ -175,12 +176,12 @@ class ExtensionAutomata {
 			inputs.property "version", this.getVersionPure()
 			inputs.property "mcversion", this.minecraft.getVersion()
 
-			from (project.sourceSets.main.resources.srcDirs) {
+			from(project.sourceSets.main.resources.srcDirs) {
 				include 'mcmod.info'
 				expand 'version': this.getVersionPure(), 'mcversion': this.minecraft.getVersion()
 			}
 
-			from (project.sourceSets.main.resources.srcDirs) {
+			from(project.sourceSets.main.resources.srcDirs) {
 				exclude 'mcmod.info'
 			}
 
@@ -191,7 +192,7 @@ class ExtensionAutomata {
 		def changelog = new PropertyChangelog()
 		changelog.with(closure)
 		changelog.createTask(this.project, this)
-		this.changelogs.put(changelog.id, changelog)
+		this.changelogs.put(changelog.getId(), changelog)
 	}
 
 	public void setCurseKey(String curseKey) {
@@ -201,19 +202,26 @@ class ExtensionAutomata {
 
 	public void curseProject(Closure<?> closure) {
 
-		def id = closure.getProperty("id")
+		// todo work around for https://github.com/matthewprenger/CurseGradle/pull/7
+		// this.curseforge.project(closure)
+		CurseProject curseProject = new CurseProject()
+		curseProject.with(closure)
+		if (curseProject.apiKey == null) {
+			curseProject.apiKey = this.curseforge.apiKey
+		}
+		this.curseforge.curseProjects.add(curseProject)
+
+		if (curseProject.changelog != null) return
 
 		def changelogObj
-		if (this.changelogs.containsKey(id)) {
-			PropertyChangelog changelogProp = this.changelogs.get(id)
+		if (this.changelogs.containsKey(curseProject.getId())) {
+			PropertyChangelog changelogProp = this.changelogs.get(curseProject.getId())
 			changelogObj = project.file(changelogProp.getFileName())
-		}
-		else {
+		} else {
 			changelogObj = "No changelog defined"
 		}
-		closure.setProperty("changelog", changelogObj)
+		curseProject.changelog = changelogObj
 
-		this.curseforge.project(closure);
 	}
 
 	public void archives(Closure<?> closure) {
@@ -247,10 +255,14 @@ class ExtensionAutomata {
 	}
 
 	def onAfterEvaluate() {
-		for (PropertyChangelog changelog : this.changelogs.values()) {
-			Task curseforgeTask = this.project.getTasks().findByName("curseforge" + changelog.id)
-			if (curseforgeTask != null) changelog.linkToCurseforge(curseforgeTask)
-			else System.out.println("ERROR: curseforge" + changelog.id + " does not exist.")
+
+		for (CurseProject curseProject : this.curseforge.getCurseProjects()) {
+			CurseUploadTask curseforgeTask = curseProject.uploadTask
+			if (curseforgeTask != null) {
+				this.changelogs.get(curseProject.getId()).linkToCurseforge(curseforgeTask)
+			} else
+				System.out.println("ERROR: curseforge" + curseProject.getId() +
+						" (CurseUploadTask) does not exist.")
 		}
 	}
 
