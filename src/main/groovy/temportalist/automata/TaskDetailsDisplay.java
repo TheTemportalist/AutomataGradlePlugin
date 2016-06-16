@@ -3,10 +3,12 @@ package temportalist.automata;
 import net.minecraftforge.gradle.user.patcherUser.forge.ForgeExtension;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.api.tasks.TaskExecutionException;
 import org.gradle.language.jvm.tasks.ProcessResources;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import static java.lang.System.out;
@@ -26,6 +28,15 @@ public class TaskDetailsDisplay extends DefaultTask {
 			Project project = this.getProject();
 			out.println("Group: " + project.getGroup());
 			out.println("Version: " + project.getVersion());
+
+			out.println();
+
+			out.println("Repositories:");
+			Iterator<ArtifactRepository> iterator = project.getRepositories().iterator();
+			while (iterator.hasNext()) {
+				ArtifactRepository repo = iterator.next();
+				out.println(repo.getName());
+			}
 
 			out.println();
 
