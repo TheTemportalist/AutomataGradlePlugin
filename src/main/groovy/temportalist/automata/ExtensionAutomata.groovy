@@ -15,6 +15,8 @@ class ExtensionAutomata {
 	private final ForgeExtension minecraft;
 	private final CurseExtension curseforge;
 
+	PropertyDependencies dependencies;
+
 	// General project vars
 	String organization, groupName;
 	// Project versioning using Semver
@@ -44,6 +46,12 @@ class ExtensionAutomata {
 		// Makes sure CurseGradle doesn't complain if the user doesn't use curse
 		this.curseforge.setApiKey("");
 
+	}
+
+	public void dependencies(Closure<?> closure) {
+		this.dependencies = new PropertyDependencies()
+		this.dependencies.with(closure)
+		this.dependencies.load(this.project, this.minecraft)
 	}
 
 	public void setOrganization(String org) {
@@ -188,5 +196,31 @@ class ExtensionAutomata {
 		this.archives.with closure
 		this.archives.setupArchives(this.project);
 	}
+
+	// ~~~ Start: Miscellaneous Functions
+
+	def getBranch() {
+		if (project.hasProperty("GIT_BRANCH"))
+			return "${GIT_BRANCH}"
+		else {
+			def proc = "git rev-parse --abbrev-ref HEAD".execute()
+			proc.waitFor()
+			return proc.text.trim()
+		}
+	}
+
+	def getDate() {
+		def date = new Date()
+		def formattedDate = date.format('MM_dd_yyyy_HH_mm_ss')
+		return formattedDate
+	}
+
+	def getBuildNumber() {
+		if (System.getenv("BUILD_NUMBER") != null) return "${System.getenv("BUILD_NUMBER")}"
+		else if (project.hasProperty("bambooBuildNumber")) return project.bambooBuildNumber
+		else return getDate()
+	}
+
+	// ~~~~~ End: Miscellaneous Functions
 
 }
