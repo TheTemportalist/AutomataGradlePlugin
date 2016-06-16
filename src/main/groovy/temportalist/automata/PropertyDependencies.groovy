@@ -34,7 +34,7 @@ class PropertyDependencies {
 				)
 				if (dependency.containsKey("replace")) {
 					def replaceClosure = dependency.get("replace") as Closure<?>
-					System.out.println(replaceClosure)
+					System.out.println(replaceClosure.properties)
 					/*
 					def original = String.format("%s:%s",
 							replaceClosure.getProperty("instruction"),
