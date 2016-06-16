@@ -150,7 +150,8 @@ class ExtensionAutomata {
 		Map<String, Object> replaceMap = new HashMap<>()
 		replaceMap.putAll(this.replace.replaceMap)
 		replaceMap.put(this.replace.version, this.getVersionPure())
-		replaceMap.put(this.replace.forge, this.replace.forge + this.getVersionForge())
+		replaceMap.put(this.replace.forge,
+				this.replace.forge + "@[" + this.getVersionForge() + ",)")
 		this.minecraft.replace(replaceMap) // TODO, this doesnt seem to do anything
 	}
 
