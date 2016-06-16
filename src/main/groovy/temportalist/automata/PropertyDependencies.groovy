@@ -11,7 +11,7 @@ import org.gradle.api.Project
 class PropertyDependencies {
 
 	Map<String, String> repositories;
-	Map<String, Object>[] dependencies;
+	PropertyDependency[] dependencies;
 
 	def load(Project project, ForgeExtension minecraft) {
 		project.getRepositories().mavenCentral()
@@ -25,17 +25,19 @@ class PropertyDependencies {
 			}
 		}
 		if (this.dependencies != null && this.dependencies.length > 0) {
-			for (Map<String, Object> dependency : this.dependencies) {
+			for (PropertyDependency dependency : this.dependencies) {
+
 				project.dependencies.add(
-						dependency.get("compileWith"),
+						dependency.compileWith,
 						String.format("%s:%s:%s",
-								dependency.get("group"), dependency.get("name"), dependency.get("version")
+								dependency.group, dependency.name, dependency.version
 						)
 				)
-				if (dependency.containsKey("replace")) {
-					def replaceClosure = dependency.get("replace") as Closure<?>
-					System.out.println(replaceClosure.properties)
+				if (dependency.replace != null) {
+					System.out.println(dependency.replace.properties)
 					/*
+					def replaceClosure = dependency.get("replace") as Closure<?>
+					System.out.println(replaceClosure.properties.entrySet())
 					def original = String.format("%s:%s",
 							replaceClosure.getProperty("instruction"),
 							replaceClosure.getProperty("modid")
